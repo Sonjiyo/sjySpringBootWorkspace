@@ -1,11 +1,13 @@
 package kr.boot.basic.service;
 
+import jakarta.transaction.Transactional;
 import kr.boot.basic.domain.Member;
 import kr.boot.basic.repository.MemberRepository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
