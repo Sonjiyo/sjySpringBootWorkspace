@@ -3,10 +3,11 @@ package kr.boot.basic.repository;
 import kr.boot.basic.domain.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository {
     Member save(Member member);
-    Member findById(Long id);
-    Member fintByName(String name);
-    List<Member> fintAll();
+    Optional<Member> findById(Long id);
+    Optional<Member> findByName(String name);
+    List<Member> findAll();
 }
