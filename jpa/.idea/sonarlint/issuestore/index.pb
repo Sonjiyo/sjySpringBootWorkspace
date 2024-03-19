@@ -11,3 +11,5 @@ Q
 !src/main/java/entity/Student.java,1\6\167465bc987805ff453fc4c4dd234e2334046eb2
 O
 src/main/java/entity/Major.java,6\3\63c811f78cad73cf4468524103a4d08df9ed51f5
+P
+ src/main/java/entity/Locker.java,d\2\d250213530fd437195bdb35883667371a92d3ef5

@@ -1,4 +1,5 @@
 import entity.Customer;
+import entity.Locker;
 import entity.Major;
 import entity.Student;
 
@@ -35,11 +36,9 @@ public class JpaMain {
         tx.begin(); //start transciton
         try {
             //init(em);
-            Student findStudent = em.find(Student.class, 1L);
-            System.out.println("findStudent = "+findStudent);
-
-//            Major findMajor = em.find(Major.class, findStudent.getMajor());
-//            System.out.println("findMajor = "+findMajor);
+            Student stu = em.find(Student.class, 2L);
+            Locker locker = em.find(Locker.class, 3L);
+            stu.setLocker(locker);
             tx.commit(); //commit 쓰기 지연 저장소에 있는 sql 쿼리문(insert, update, delete)한꺼번에 나간다
         }catch (Exception e){
             tx.rollback();
