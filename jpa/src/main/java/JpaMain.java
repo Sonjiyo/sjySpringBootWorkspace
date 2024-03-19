@@ -4,9 +4,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JpaMain {
+
+    public static List<Customer> initcustomer(){
+        List<Customer> list = new ArrayList<>();
+        list.add(new Customer("ID100","test1"));
+        list.add(new Customer("ID101","test2"));
+        list.add(new Customer("ID102","test3"));
+        list.add(new Customer("ID103","test4"));
+        list.add(new Customer("ID104","test5"));
+        list.add(new Customer("ID105","test6"));
+        return list;
+    }
+
     public static void main(String[] args) {
+
         //session Factory
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("customer-ex");
         EntityManager em = emf.createEntityManager(); //session 객체
