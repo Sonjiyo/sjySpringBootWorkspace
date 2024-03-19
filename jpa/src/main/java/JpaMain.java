@@ -1,25 +1,28 @@
 import entity.Customer;
+import entity.Student;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JpaMain {
 
-    public static List<Customer> initcustomer(){
-        List<Customer> list = new ArrayList<>();
-        list.add(new Customer("ID100","test1"));
-        list.add(new Customer("ID101","test2"));
-        list.add(new Customer("ID102","test3"));
-        list.add(new Customer("ID103","test4"));
-        list.add(new Customer("ID104","test5"));
-        list.add(new Customer("ID105","test6"));
-        return list;
-    }
+//    public static List<Customer> initcustomer(){
+//        List<Customer> list = new ArrayList<>();
+//        list.add(new Customer("ID100","test1"));
+//        list.add(new Customer("ID101","test2"));
+//        list.add(new Customer("ID102","test3"));
+//        list.add(new Customer("ID103","test4"));
+//        list.add(new Customer("ID104","test5"));
+//        list.add(new Customer("ID105","test6"));
+//        return list;
+//    }
+    public static void init(en){
+        Student stu1 = new Student("김씨","1학년");
+        Student stu2 = new Student("이씨","2학년");
+        Student stu3 = new Student("박씨","3학년");
 
+    }
     public static void main(String[] args) {
 
         //session Factory
@@ -29,22 +32,41 @@ public class JpaMain {
 
         tx.begin(); //start transciton
         try {
-            //영속성 컨테이너에서 값을 저장하는 두가지 방법
-            Customer findCustomer = em.find(Customer.class, "ID002");
-            System.out.println("findCustomer = "+findCustomer);
-
-            Customer c = new Customer("ID005","test");
+            Customer c = new Customer();
+            c.setName("test");
             em.persist(c);
-
-            em.flush(); //db와 영속성 컨테이너의 데이터를 동기화해준다.(저장X)
-            // 쓰기 지연 저장소에 있는 쿼리를 즉시 날린다
-
-            em.clear(); //영속성 컨테이너 초기화
-
-
-            findCustomer.setName("이름다시수정"); //변경 감지 : 최초 영속성 컨테이너에 저장되있는 스냅샷 객체와 비교
-                                            //쓰기 지연 update에 저장
-            System.out.println("findCustomer = "+findCustomer);
+//            String query = "select c from Customer c where c.name = :name";
+//            Customer findCustomer = em.createQuery(query, Customer.class)
+//                    .setParameter("name","test2").getSingleResult();
+//            System.out.println("findCustomer = "+findCustomer);
+//            List<Customer> list = initcustomer();
+//            list.forEach(c->em.persist(c));
+//
+//            System.out.println("========== start ==========");
+//
+//            //query 실행 전에 자동으로 em.flush()
+//            Query query = em.createQuery("select c from Customer c", Customer.class);
+//            List<Customer> customers = query.getResultList();
+//
+//            System.out.println("========== end ==========");
+//
+//            customers.forEach(c-> System.out.println("c = "+c));
+//            //영속성 컨테이너에서 값을 저장하는 두가지 방법
+//            Customer findCustomer = em.find(Customer.class, "ID002");
+//            System.out.println("findCustomer = "+findCustomer);
+//
+//            Customer c = new Customer("ID005","test");
+//            em.persist(c);
+//
+//            em.flush(); //db와 영속성 컨테이너의 데이터를 동기화해준다.(저장X)
+//            // 쓰기 지연 저장소에 있는 쿼리를 즉시 날린다
+//
+//            em.clear(); //영속성 컨테이너 초기화
+//
+//
+//            findCustomer.setName("이름다시수정"); //변경 감지 : 최초 영속성 컨테이너에 저장되있는 스냅샷 객체와 비교
+//                                            //쓰기 지연 update에 저장
+//            System.out.println("findCustomer = "+findCustomer);
             
             
             

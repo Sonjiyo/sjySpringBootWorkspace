@@ -1,4 +1,6 @@
 
-m	java:S106""+Replace this use of System.out by a logger.(ÃêãÛ8åßÄ©å1J$437348c4-d8ac-48c1-ab0a-482bd28447c8
-m	java:S106/"+Replace this use of System.out by a logger.(ÃêãÛ8æßÄ©å1J$0d2277d5-5f32-444c-8ab0-d16c4e8ef74e
-ƒ	java:S1253"<This block of commented-out lines of code should be removed.(¨ÚÅ±ûÿÿÿÿ8çßÄ©å1J$aa1672c8-e723-45b6-a436-1e48888c3c75
+]
+java:S1220""Move this file to a named package.8¨Ñû«å1J$71cbcd6e-cdfa-4196-bcf3-9b1f5c4e3ba7
+ƒ	java:S125	"<This block of commented-out lines of code should be removed.(…·á¹úÿÿÿÿ8Ğëåªå1J$b4693513-e815-4894-9e42-4b82b581e1dc
+}	java:S125 "<This block of commented-out lines of code should be removed.(èÙ®8Œ”×ªå1J$b0f5fcad-402f-40fb-91c5-92347a2bb138
+ƒ	java:S125C"<This block of commented-out lines of code should be removed.(¨ÚÅ±ûÿÿÿÿ8èÌ§ªå1J$96869795-0fcd-43c9-8b48-0d9bfa934ba6

@@ -5,3 +5,9 @@ J
 src/main/java/JpaMain.java,2\c\2c3a89303a2759c4d1535b82e4b3928ad7d16378
 R
 "src/main/java/entity/Customer.java,f\1\f14bad5e68bdfef4c489ba84a4d9c620bc6cb0f1
+[
++src/main/resources/META-INF/persistence.xml,3\b\3be4f79b5828b3982f3f6a62bf8fc67b3adedf58
+Q
+!src/main/java/entity/Student.java,1\6\167465bc987805ff453fc4c4dd234e2334046eb2
+O
+src/main/java/entity/Major.java,6\3\63c811f78cad73cf4468524103a4d08df9ed51f5
