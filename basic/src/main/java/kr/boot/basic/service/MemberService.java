@@ -2,18 +2,23 @@ package kr.boot.basic.service;
 
 import jakarta.transaction.Transactional;
 import kr.boot.basic.domain.Member;
-import kr.boot.basic.repository.MemberRepository;
+import kr.boot.basic.repository.SpringJpaMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @Transactional
 public class MemberService {
-    private final MemberRepository memberRepository;
+    //private final MemberRepository memberRepository;
+    @Autowired
+    private final SpringJpaMemberRepository memberRepository;
 
-    public MemberService(MemberRepository repository){
-        this.memberRepository = repository;
-    }
+    //public MemberService(MemberRepository repository){
+    //    this.memberRepository = repository;
+    //}
 
     //회원가입
     public void join(Member member){

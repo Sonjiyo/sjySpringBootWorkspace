@@ -5,23 +5,21 @@ import jakarta.persistence.EntityManager;
 import kr.boot.basic.repository.JpaMemberRepository;
 import kr.boot.basic.repository.MemberRepository;
 import kr.boot.basic.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configuration
+@RequiredArgsConstructor
+//@Configuration
 public class SpringConfig {
 
     private final DataSource dataSource;
     private final EntityManager em;
-    public SpringConfig(DataSource dataSource, EntityManager em){
-        this.dataSource = dataSource;
-        this.em = em;
-    }
+
     @Bean
     public MemberService memberService(MemberRepository memberRepository) {
-        return new MemberService(memberRepository);
+        return null;//new MemberService(memberRepository);
     }
 
     @Bean
