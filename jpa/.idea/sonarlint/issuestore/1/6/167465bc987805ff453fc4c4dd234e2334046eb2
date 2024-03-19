@@ -1,3 +1,5 @@
 
-]
-java:S2094"BRemove this empty class, write its code or make it an "interface".( ´°îûÿÿÿÿ
+m
+java:S1128"*Remove this unused import 'lombok.Getter'.(ùÒµÙ8Ä²›­å1J$a2968f4e-11b1-4725-a9dd-d84c7439e9cd
+m
+java:S1128"*Remove this unused import 'lombok.Setter'.(ó¸çµ8Ä²›­å1J$3631e79e-7fcb-4f4c-b323-a15d60b1602a

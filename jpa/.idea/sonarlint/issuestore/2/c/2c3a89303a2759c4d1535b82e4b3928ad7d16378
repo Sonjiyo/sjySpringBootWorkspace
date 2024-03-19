@@ -1,6 +1,13 @@
 
 ]
-java:S1220""Move this file to a named package.8¨Ñû«å1J$71cbcd6e-cdfa-4196-bcf3-9b1f5c4e3ba7
-ƒ	java:S125	"<This block of commented-out lines of code should be removed.(…·á¹úÿÿÿÿ8Ðëåªå1J$b4693513-e815-4894-9e42-4b82b581e1dc
-}	java:S125 "<This block of commented-out lines of code should be removed.(èÙ®8Œ”×ªå1J$b0f5fcad-402f-40fb-91c5-92347a2bb138
-ƒ	java:S125C"<This block of commented-out lines of code should be removed.(¨ÚÅ±ûÿÿÿÿ8èÌ§ªå1J$96869795-0fcd-43c9-8b48-0d9bfa934ba6
+java:S1220""Move this file to a named package.8¨Ñû«å1J$aae745a7-fa8e-4ae1-a9d1-a67464e353ce
+]	java:S125%"<This block of commented-out lines of code should be removed.(ÔÈ›°üÿÿÿÿ8ÁãÚ­å1
+L	java:S106'"+Replace this use of System.out by a logger.(™–¬ôýÿÿÿÿ8ÂãÚ­å1
+~	java:S125)"<This block of commented-out lines of code should be removed.(±ˆ˜»8ëËÐ­å1J$faeae7e0-0b2d-42b9-8dad-13f31befa645
+o
+java:S1128",Remove this unused import 'entity.Customer'.(éþ²¢8ÖË­å1J$bf150628-4cb3-4b87-9437-2bd3ca81e6e0
+s
+java:S1128	"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ÖË­å1J$5ea0ae79-581c-46ec-97a6-f42b2cdb6ac7
+s
+java:S1128
+"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8‘ÖË­å1J$fef4bf71-ce93-4a30-9d2e-c1d5ad99c611

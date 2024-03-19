@@ -22,7 +22,7 @@
             <property name="hibernate.jdbc.batch_size" value="10"/>
 
             <!-- value="create" 사용시 Drop Table이후 자동으로 Create Table 실행 => 실무 상황에서는 무조건 사용 X -->
-            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
 </persistence>
