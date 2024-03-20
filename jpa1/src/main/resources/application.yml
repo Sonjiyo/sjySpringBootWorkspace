@@ -6,7 +6,8 @@ server:
 
 logging:
   level:
-    com.boot.first: info
+    kr.study.jpa1: info
+    kr.study.jpa1.controller: trace
 
 spring:
   datasource:
