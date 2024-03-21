@@ -2,6 +2,7 @@ package kr.ex.querydsl.domain;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+//import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import static org.assertj.core.api.Assertions.*;
+
 @SpringBootTest //통합 테스트
 @Transactional // 트렌지션을 열어야 db에 값 전달 가능 => 전달 후 rollback
 class HelloTest {
@@ -53,6 +56,6 @@ class HelloTest {
         result.forEach(h1-> System.out.println("h1 = " + h1));
         System.out.println("findHello = " + findHello);
 
-        Assertions.assertThat(findHello).isEqualTo(hello2);
+        assertThat(findHello).isEqualTo(hello2);
     }
 }
