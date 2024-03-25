@@ -1,5 +1,7 @@
-package kr.ex.querydsl.domain;
+package kr.ex.querydsl.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,11 +14,13 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
+    //@JsonIgnore
     private Long id;
     private String username;
     private int age;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
+    @JsonBackReference
     private Team team;
     public Member(String username) {
         this(username, 0);
@@ -33,6 +37,6 @@ public class Member {
     }
     public void changeTeam(Team team) {
         this.team = team;
-        team.getMembers().add(this); // 팀에 연관 되어있는 나도 변경해줘야한다
+        team.getMembers().add(this);
     }
 }

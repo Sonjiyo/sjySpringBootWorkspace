@@ -6,7 +6,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import kr.ex.querydsl.entity.Member;
-import kr.ex.querydsl.domain.QMember;
+import kr.ex.querydsl.entity.QMember;
 import kr.ex.querydsl.entity.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,22 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static kr.ex.querydsl.domain.QMember.member;
-import static kr.ex.querydsl.domain.QTeam.team;
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-@SpringBootTest
+import static kr.ex.querydsl.entity.QMember.member;
+import static kr.ex.querydsl.entity.QTeam.team;
+import static org.assertj.core.api.Assertions.*;
 @Transactional
-class QueryDslTest2 {
+@SpringBootTest
+public class QuerDslTest2 {
     @Autowired
     EntityManager em;
     JPAQueryFactory query;
     @BeforeEach
-    void voidInitData(){
-        //쿼리DSL 객체
+    void initData(){
+        // 쿼리DSL 객체
         query = new JPAQueryFactory(em);
-
         Team teamA = new Team("teamA");
         Team teamB = new Team("teamB");
         em.persist(teamA);
@@ -44,10 +41,10 @@ class QueryDslTest2 {
         em.persist(member2);
         em.persist(member3);
         em.persist(member4);
-        //영속성 컨텍스트 초기화
+        // 영속성 컨텍스트 초기화
         em.flush();
         em.clear();
-        System.out.println("===========================");
+        System.out.println("==========================");
     }
     /**
      * JPQL
@@ -59,9 +56,10 @@ class QueryDslTest2 {
      * MIN(m.age) //최소 나이
      * from Member m
      */
+
+    // Tuple -> queryDsl 에서 제공해주는 여러 자료형를 전부다 저장할 수 있는 객체
     @Test
-    public void aggregation2() throws Exception {
-        //여러 자료형값을 저장할 수 있음
+    public void aggregation() throws Exception {
         List<Tuple> result = query
                 .select(member.count(),
                         member.age.sum(),
@@ -70,9 +68,12 @@ class QueryDslTest2 {
                         member.age.min())
                 .from(member)
                 .fetch();
-        Tuple tuple = result.get(0);
+        Tuple tuple = result.get(0); // count() 결과
         System.out.println("tuple.toString() = " + tuple.toString());
         System.out.println("count = " + tuple.get(member.count()));
+
+        result.forEach(t-> System.out.println("t = " + t));
+
 
         assertThat(tuple.get(member.count())).isEqualTo(4);
         assertThat(tuple.get(member.age.sum())).isEqualTo(100);
@@ -80,16 +81,15 @@ class QueryDslTest2 {
         assertThat(tuple.get(member.age.max())).isEqualTo(40);
         assertThat(tuple.get(member.age.min())).isEqualTo(10);
     }
-
     /**
      * 팀의 이름과 각 팀의 평균 연령을 구해라
      */
     @Test
-    public void group() throws Exception {
+    public void group(){
         List<Tuple> result = query
                 .select(team.name, member.age.avg())
                 .from(member)
-                .join(member.team, team) //join은 inner 조인을 의미 m.teamid = t.teamid
+                .join(member.team, team)     // join 은 inner 조인을 의미한다  m.teamid = t.teamid
                 .groupBy(team.name)
                 //.having(member.age.avg().gt(10))
                 .fetch();
@@ -103,7 +103,6 @@ class QueryDslTest2 {
         assertThat(teamB.get(team.name)).isEqualTo("teamB");
         assertThat(teamB.get(member.age.avg())).isEqualTo(35);
     }
-
     /**
      * 세타 조인(연관관계가 없는 필드로 조인)
      * 회원의 이름이 팀 이름과 같은 회원 조회
@@ -111,10 +110,13 @@ class QueryDslTest2 {
     @Test
     public void theta_join() throws Exception {
         // 사람 이름이 teamA
-        // 연관관겨는 id 만 있으니깐 name 으로도 되는지 test
-        em.persist(new Member("teamA"));
+        // 연관관겨는 id 만 있으니깐 name 으로도 되는지 test  : 연관관계 m.teamId = t.teamId
+        em.persist(new Member("teamA")); // member.setName("teamA")
         em.persist(new Member("teamB"));
         em.persist(new Member("teamC"));
+
+        // select * from member m , team t where m.username = t.username;
+
         List<Member> result = query
                 .select(member)
                 .from(member, team) // from 두개를 나열하는 것
@@ -184,4 +186,5 @@ class QueryDslTest2 {
                 .fetch();
         result.stream().forEach(s -> System.out.println("s = " + s));
     }
+
 }

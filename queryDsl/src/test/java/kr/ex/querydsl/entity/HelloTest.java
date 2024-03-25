@@ -1,38 +1,36 @@
-package kr.ex.querydsl.domain;
+package kr.ex.querydsl.entity;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-//import org.assertj.core.api.Assertions;
-import kr.ex.querydsl.entity.Hello;
-import kr.ex.querydsl.entity.QHello;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 import static org.assertj.core.api.Assertions.*;
+import java.util.List;
 
-@SpringBootTest //통합 테스트
-@Transactional // 트렌지션을 열어야 db에 값 전달 가능 => 전달 후 rollback
+
+@SpringBootTest  // 통합테스트 : 스프링부트 시작처럼 root-context : db 객체 -> em
+@Transactional // 트렌지션을 열어야지만 db에 값 전달 가능 transitiaonal.commit() -> rollback(): 테스트만 하고 db 값은 저장안된다
 class HelloTest {
     @Autowired
     EntityManager em;
 
     @Test
-   // @Commit rollback 안하고 저장되게 하는법
+    //@Commit  // commit 을 하면 rollback 안하고 진짜 db 에 저장된다
     void firstTest(){
-        Hello hello = new Hello();
         Hello hello1 = new Hello();
         Hello hello2 = new Hello();
         Hello hello3 = new Hello();
-        em.persist(hello);
+        Hello hello4 = new Hello();
         em.persist(hello1);
         em.persist(hello2);
         em.persist(hello3);
-
+        em.persist(hello4);
+        System.out.println("=================");
         List<Hello> list =  em.createQuery("select h from Hello h").getResultList();
-        list.forEach(h-> System.out.println("h = " + h));
+
+        list.forEach(h -> System.out.println("h = " + h));
     }
 
     @Test
@@ -45,18 +43,21 @@ class HelloTest {
         em.persist(hello2);
         em.persist(hello3);
         em.persist(hello4);
-        System.out.println("===================");
-
+        System.out.println("=================");
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
         QHello h = new QHello("hello");
 
-        List<Hello> result = queryFactory.select(h.hello).from(h.hello).fetch();
-        //QHello 클래스 안에 미리 static final hello객체를 만들어놓음
+        List<Hello> list = queryFactory.select(h.hello).from(h.hello).fetch();
+        // QHello 클래스 안에 미리 static final hello 객체를 만들어놨다
         Hello findHello = queryFactory.selectFrom(QHello.hello).fetchFirst();
 
-        result.forEach(h1-> System.out.println("h1 = " + h1));
         System.out.println("findHello = " + findHello);
 
+        //Assertions.assertEquals(findHello, hello2);
+       // org.assertj.core.api.Assertions.assertThat(findHello).isEqualTo(hello2);
         assertThat(findHello).isEqualTo(hello2);
+        list.forEach(h2 -> System.out.println("h2 = " + h2));
     }
+
+
 }
