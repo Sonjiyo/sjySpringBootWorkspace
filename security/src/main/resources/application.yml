@@ -1,3 +1,10 @@
+spring:
+  profiles:
+    active: local
+    group:
+      local: common, secret
+
+---
 server:
   port: 8081
   servlet:
@@ -19,3 +26,6 @@ spring:
     view:
       prefix: templates/
       suffix: .html
+  config:
+    activate:
+      on-profile: common
