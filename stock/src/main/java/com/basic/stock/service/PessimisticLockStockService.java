@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+// 데이터, 테이블 자체 락
+// 한 쓰레드가 데이터, 테이블 점유를 하면 다른 쓰레드는 건드리지 못함
+// 데이터를 빈번하게 중복해서 건드릴 때 사용
+
 @Service
 @RequiredArgsConstructor
 public class PessimisticLockStockService {

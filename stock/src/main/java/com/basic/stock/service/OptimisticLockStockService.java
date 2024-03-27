@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+// 버전을 만들어서 db 버전과 서버에서 가져온 버전이 일치할 때만
+// db를 수정, 삭제, 삽입 할 수 있음
+// 데이터를 빈번하게 중복해서 건드리지 않을 때 => 실무에서는 더 많이 사용
 @Service
 @RequiredArgsConstructor
 public class OptimisticLockStockService {

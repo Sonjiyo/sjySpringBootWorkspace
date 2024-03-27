@@ -1,6 +1,7 @@
 package com.basic.stock.service;
 
 import com.basic.stock.entity.Stock;
+import com.basic.stock.facade.NamedLockStockFacade;
 import com.basic.stock.facade.OptimisticLockStockFacade;
 import com.basic.stock.repository.StockRepository;
 import org.assertj.core.api.Assertions;
@@ -13,12 +14,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class OptimisticLockStockServiceTest {
+class NamedLockStockServiceTest {
     @Autowired
-    private OptimisticLockStockFacade facade; //재시도 해주는 로직 객체
+    private NamedLockStockFacade facade;
     @Autowired
     private StockRepository repository;
 
@@ -41,7 +40,7 @@ class OptimisticLockStockServiceTest {
 
             executorService.submit(() -> {
                 try {
-                    facade.decreseStock(1L, 1L);
+                    facade.decreaseStock(1L, 1L);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 } finally {

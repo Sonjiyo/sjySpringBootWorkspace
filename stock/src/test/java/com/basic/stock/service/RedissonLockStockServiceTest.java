@@ -1,7 +1,8 @@
 package com.basic.stock.service;
 
 import com.basic.stock.entity.Stock;
-import com.basic.stock.facade.OptimisticLockStockFacade;
+import com.basic.stock.facade.LettuceLockStockFacade;
+import com.basic.stock.facade.RedissonLockStockFacade;
 import com.basic.stock.repository.StockRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +14,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class OptimisticLockStockServiceTest {
+class RedissonLockStockServiceTest {
     @Autowired
-    private OptimisticLockStockFacade facade; //재시도 해주는 로직 객체
+    private RedissonLockStockFacade facade;
     @Autowired
     private StockRepository repository;
 
@@ -41,7 +40,7 @@ class OptimisticLockStockServiceTest {
 
             executorService.submit(() -> {
                 try {
-                    facade.decreseStock(1L, 1L);
+                    facade.decrease(1L, 1L);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 } finally {
