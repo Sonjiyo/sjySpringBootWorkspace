@@ -1,10 +1,26 @@
+
 spring:
   profiles:
     active: local
     group:
       local: common, secret
-
 ---
+spring:
+  config:
+    activate:
+      on-profile: common
+  jpa:
+    hibernate:
+      ddl-auto: create #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+  mvc:
+    view:
+      prefix: templates/
+      suffix: .html
+
+
 server:
   port: 8081
   servlet:
@@ -13,19 +29,3 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-
-
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: update #create update none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-  mvc:
-    view:
-      prefix: templates/
-      suffix: .html
-  config:
-    activate:
-      on-profile: common

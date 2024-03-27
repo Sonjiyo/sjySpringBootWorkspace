@@ -8,7 +8,6 @@ import kr.basic.security.entity.RoleUser;
 import kr.basic.security.entity.Users;
 import kr.basic.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -23,49 +22,20 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    //userQuest는 구글에서 코드를 받아서 acessToken을 응답 받는 객체
+    // userQuest 는 구글에서 코드를 받아서 accessToken을 응답 받는객체
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("user request clientRegistration : "+userRequest.getClientRegistration());
-        System.out.println("user request getAccessToken : "+userRequest.getAccessToken().getTokenValue());
 
-        OAuth2User oAuth2User = super.loadUser(userRequest); //google 회원 프로필 조회
-        System.out.println("get Attribute : "+oAuth2User.getAttributes());
-
-        //회원가입 강제로 진행하기
-        String provider = userRequest.getClientRegistration().getClientId();
-        System.out.println("provider = " + provider);
-
-        String providerId = oAuth2User.getAttribute("sub");
-        System.out.println("providerId = " + providerId);
-
-        String username = provider+"_"+providerId;
-        String password = bCryptPasswordEncoder.encode("test"); //비번이 필요 X
-        String email = oAuth2User.getAttribute("email");
-
-        // 이미 기존에 구글로 로그인을 한 회원인지 확인
-        Users user = userRepository.findByUsername(username);
-        if(user==null){
-            user = Users.builder()
-                    .username(username)
-                    .password(password)
-                    .email(email)
-                    .role(RoleUser.ROLE_USER)
-                    .provider(provider)
-                    .providerId(providerId)
-                    .build();
-            userRepository.save(user);
-        }
-        //loadUser --> Authentication 객체 안에 들어간다
-        return processOAuthUser(userRequest, oAuth2User);
-        //return new PrincipalDetails(user, oAuth2User.getAttributes());
+        System.out.println("user request clientRegistration : " + userRequest.getClientRegistration());
+        System.out.println("user reuset getAccessToken :" + userRequest.getAccessToken().getTokenValue());
+        OAuth2User oAuth2User = super.loadUser(userRequest); // google 회원 프로필 조회
+        System.out.println("get Attribute : " + oAuth2User.getAttributes());
+         // loadUser --> Authentication 객체 안에 들어간다
+        return processOAuthUser(userRequest , oAuth2User);
     }
-
-    private OAuth2User processOAuthUser(OAuth2UserRequest userRequest, OAuth2User oAuth2User){
+    private OAuth2User processOAuthUser(OAuth2UserRequest userRequest , OAuth2User oAuth2User){
         // Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
@@ -88,7 +58,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             user = Users.builder()
                     .username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
                     .email(oAuth2UserInfo.getEmail())
-                    .role(RoleUser.ROLE_USER)
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
                     .build();
@@ -99,4 +68,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         return new PrincipalDetails(user, oAuth2User.getAttributes());
     }
+
+
 }

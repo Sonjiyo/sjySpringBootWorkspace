@@ -1,6 +1,7 @@
 package kr.basic.security.controller;
 
 import kr.basic.security.config.auth.PrincipalDetails;
+import kr.basic.security.entity.RoleUser;
 import kr.basic.security.entity.Users;
 import kr.basic.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -37,6 +40,16 @@ public class HomeController {
     @PostMapping("/join")
     public String join(Users user){
         log.trace("user={}" , user);
+
+        int num = new Random().nextInt(0,2);
+        if(num == 0){
+            user.setRole(RoleUser.ROLE_MANAGER);
+        }else if(num == 1){
+            user.setRole(RoleUser.ROLE_USER);
+        }else{
+            user.setRole(RoleUser.ROLE_ADMIN);
+        }
+
         String initPassword = user.getPassword();
         String enPassword = bCryptPasswordEncoder.encode(initPassword);
         user.setPassword(enPassword);
@@ -75,10 +88,15 @@ public class HomeController {
     }
 
     @GetMapping("/test/oauth")
-    public @ResponseBody OAuth2User testLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oAuth){
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-
-        return oAuth2User;
+    public @ResponseBody  OAuth2User testLogin(Authentication authentication,
+                                          @AuthenticationPrincipal OAuth2User oauth){
+        if(authentication == null){
+            return null;
+        }
+        OAuth2User oAuth2User2 = (OAuth2User)authentication.getPrincipal();
+        log.error("oauth = {}" ,oauth);
+        return oAuth2User2;
     }
+
 
 }
